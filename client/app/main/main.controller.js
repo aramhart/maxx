@@ -4,9 +4,21 @@
 
 class MainController {
 
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, guideBoxAPI) {
     this.$http = $http;
     this.awesomeThings = [];
+
+
+    guideBoxAPI.getSearchResults() //get genres
+                       .then(function (response) {
+                            $scope.searchResults = response;                           
+                            guideBoxAPI.getSearchResults($scope.searchBarInput) //pass in search bar results
+                                          .then(function (response) {
+                                           $scope.searchResults = response.data;
+                                           console.log('updated search results.. ');
+                                           console.log(response);
+                            });
+                        });
 
     $http.get('/api/things').then(response => {
       this.awesomeThings = response.data;
