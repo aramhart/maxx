@@ -16,6 +16,14 @@ angular.module('maxxApp')
                 });
     }
 
+    api.getChannels = function () {
+            return $http.get(baseUrl + 'channels')
+                .then(
+                function (response) {
+                    return response
+                });
+    }
+
     api.getSearchResults = function (searchTerm) {
             return $http.get(baseUrl + 'search/title/' + searchTerm + '/fuzzy')
                 .then(
