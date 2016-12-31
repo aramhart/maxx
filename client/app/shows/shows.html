@@ -1,1 +1,17 @@
-<div>This is the shows view.</div>
+<div class="col-md-12">
+  <h1>Shows</h1>
+  <table class="table table-striped">
+    <thead>
+      <th>id</th>
+      <th>Title</th>
+      <th>Year</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="show in shows">
+        <td>{{show.title}}</td>
+        <td>{{show.category}}</td>
+        <td>{{show.year}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
