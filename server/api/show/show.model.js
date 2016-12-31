@@ -3,9 +3,13 @@
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
 var ShowSchema = new mongoose.Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  id: String,
+  title: String,
+  category: String,
+  year: String,
+  rating: String,
+  description: String,
+  poster: String
 });
 
 export default mongoose.model('Show', ShowSchema);

@@ -6,6 +6,30 @@
 'use strict';
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
+import Show from '../api/show/show.model';
+
+Show.find({}).removeAsync()
+  .then(() => {
+    Show.create({
+      id: '122132',
+      title: 'Arrested Development',
+      category: 'Comedy',
+      year: '2005',
+      rating: '9.5',
+      description: 'A show about nothing.',
+      poster: 'enter poster location arrested develeopment'
+    }, {
+      id: '111111',
+      title: 'Pulp Fiction',
+      category: 'Drama',
+      year: '1996',
+      rating: '9.6',
+      description: 'angry people',
+      poster: 'enter poster location pulp fiction'
+    });
+  });
+
+
 
 Thing.find({}).removeAsync()
   .then(() => {
