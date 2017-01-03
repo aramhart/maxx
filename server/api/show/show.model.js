@@ -9,7 +9,11 @@ var ShowSchema = new mongoose.Schema({
   year: String,
   rating: String,
   description: String,
-  poster: String
+  poster: String,
+  imdb_id: String,
+  first_aired: String,
+  artwork_208x117: String
+
 });
 
 export default mongoose.model('Show', ShowSchema);

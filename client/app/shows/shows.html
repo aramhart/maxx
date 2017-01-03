@@ -44,13 +44,17 @@
       <th>Title</th>
       <th>id</th>
       <th>Year</th>
+      <th>IMDB id</th>
+      <th>Artwork html</th>
+
     </thead>
     <tbody> 
       <tr ng-repeat="show in shows.guideBoxShows">
         <td>{{show.title}}</td>
         <td>{{show.id}}</td>
         <td>{{show.first_aired}}</td>
-        <td><button type="button" class="close" ng-click="shows.deleteShow(show)">&times;</button></td>
+        <td>{{show.imdb_id}}</td>
+        <td>{{show.artwork_208x117}}</td>
       </tr>
    <tr>
       <td><input type="text" ng-model="shows.newShow.title"></td>
@@ -59,6 +63,8 @@
     </tr>
     </tbody>
   </table>
+
+  <button class="btn btn-primary" ng-click="shows.transferToLocalAPI()">Transfer to DB</button>
 
 
 </div>

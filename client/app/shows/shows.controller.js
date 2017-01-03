@@ -1,38 +1,79 @@
 'use strict';
 
 angular.module('maxxApp')
-  .controller('ShowsCtrl', function ($http, guideBoxAPI, socket) {
+  .controller('ShowsCtrl', function ($http, guideBoxAPI, socket, $scope) {
    // $scope.message = 'Hello';
+   this.$http = $http;
+
    var baseUrl = "https://api-public.guidebox.com/v1.43/US/rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe/";
-   this.guideBoxSearchInput = 'Alien';
-
+   this.guideBoxSearchInput = 'Bounty Hunters';
+   this.newShow = {};
    console.log('show view');
-   this.shows = '';
+  // this.shows = '';
 
+//	$http.get('/api/shows').then(response => {
+  //    this.showData = response.data;
+    //  	console.log('this.shows',this.shows);
+    //});
+
+	$scope.$on('$destroy', function() {
+      socket.unsyncUpdates('thing');
+    });
+   // $http.get(baseUrl + 'search/title/' + this.guideBoxSearchInput + '/fuzzy').then(response => {
+    //	this.guideBoxShows = response.data.results; //results is array of shows only instead of object
+    //	console.log('guideboxshows',this.guideBoxShows);
+      //      });
+                
+    
+this.getLocalData = function() {
 	$http.get('/api/shows').then(response => {
       this.showData = response.data;
       	console.log('this.shows',this.shows);
-      socket.syncUpdates('thing', this.awesomeThings);
     });
 
-   
-    $http.get(baseUrl + 'search/title/' + this.guideBoxSearchInput + '/fuzzy').then(response => {
-    	this.guideBoxShows = response.data.results; //results is array of shows only instead of object
-    	console.log('guideboxshows',this.guideBoxShows);
-            });
-                
-    
-this.hello = 'hello';
+}
 this.searchGuideBoxAPI = function(){
 
-	 $http.get(baseUrl + 'search/title/' + this.guideBoxSearchInput + '/fuzzy').then(response => {
+	 this.$http.get(baseUrl + 'search/title/' + this.guideBoxSearchInput + '/fuzzy').then(response => {
+	 	console.log('guideBoxShows',response.data.results);
     	this.guideBoxShows = response.data.results; //results is array of shows only instead of object
-    	console.log('guideboxshows',this.guideBoxShows);
             });
-	//dog = cat;
-    console.log("searched");
   };
 
+this.addNewShow = function(){
+  	console.log('adding new show', this.newShow);
+    if (this.newShow) {
+      this.$http.post('/api/shows', { name: this.newThing });
+      this.newShow = '';
+    }
+}
+
+this.deleteShow = function(show) {
+  	console.log('delete show');
+    this.$http.delete('/api/shows/' + show._id).then(response => {
+	 	console.log('deleted',show._id);
+	 	this.getLocalData(); //need to re-load local data!
+	 	// socket.syncUpdates('thing', this.awesomeThings);
+
+    	//this.guideBoxShows = response.data.results; //results is array of shows only instead of object
+            });;
+}
+
+this.transferToLocalAPI = function() {
+	//console.log('transfering to local API',this.guideBoxShows[2]);
+
+	for (var i = 0; i<this.guideBoxShows.length; i++) {
+		if (this.guideBoxShows[i]) {
+		  console.log('transfering to local API',this.guideBoxShows[i]);
+    	  this.$http.post('/api/shows', this.guideBoxShows[i]);
+ 	      //this.newShow = '';
+    	}
+    }
+    this.getLocalData();
+}
+
+this.getLocalData();
+this.searchGuideBoxAPI(); //call initially 
 
 
  });
