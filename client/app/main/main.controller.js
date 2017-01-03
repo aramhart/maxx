@@ -7,7 +7,7 @@ class MainController {
   constructor($http, $scope, socket, guideBoxAPI) {
     this.$http = $http;
     this.awesomeThings = [];
-
+    $scope.searchBarInput = 'Alien';
 
     guideBoxAPI.getSearchResults() //get genres
                        .then(function (response) {
@@ -16,7 +16,7 @@ class MainController {
                                           .then(function (response) {
                                            $scope.searchResults = response.data;
                                            console.log('updated search results.. ');
-                                           console.log(response);
+                                           console.log(response.data);
                             });
                         });
 

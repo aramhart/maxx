@@ -1,5 +1,17 @@
 <div class="col-md-12">
-  <h1>Shows</h1>
+
+{{ shows.hello }} there
+<form class="guideBoxSearch-form">
+    <label>Search Guidebox API</label>
+    <p class="input-group">
+      <input type="text" class="form-control" placeholder="Search Guidebox API" ng-model="shows.guideBoxSearchInput">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-click="shows.searchGuideBoxAPI()">Search Guidebox</button>
+      </span>
+    </p>
+  </form>
+
+  <h1>Shows in my DB.</h1>
   <table class="table table-striped">
     <thead>
       <th>id</th>
@@ -7,11 +19,46 @@
       <th>Year</th>
     </thead>
     <tbody>
-      <tr ng-repeat="show in shows">
+      <tr ng-repeat="show in shows.showData">
         <td>{{show.title}}</td>
         <td>{{show.category}}</td>
         <td>{{show.year}}</td>
+        <td><button type="button" class="close" ng-click="shows.deleteShow(show)">&times;</button></td>
       </tr>
+   <tr>
+      <td><input type="text" ng-model="shows.newShow.title"></td>
+      <td><input type="text" ng-model="shows.newShow.category"></td>
+      <td><input type="text" ng-model="shows.newShow.year"></td>
+
+      <td>
+        <button class="btn btn-primary" ng-click="shows.addNewShow()">Add New</button>
+      </td>
+    </tr>
     </tbody>
   </table>
+
+
+  <h1>Shows in Guidebox DB</h1>
+  <table class="table table-striped">
+    <thead>
+      <th>Title</th>
+      <th>id</th>
+      <th>Year</th>
+    </thead>
+    <tbody> 
+      <tr ng-repeat="show in shows.guideBoxShows">
+        <td>{{show.title}}</td>
+        <td>{{show.id}}</td>
+        <td>{{show.first_aired}}</td>
+        <td><button type="button" class="close" ng-click="shows.deleteShow(show)">&times;</button></td>
+      </tr>
+   <tr>
+      <td><input type="text" ng-model="shows.newShow.title"></td>
+      <td><input type="text" ng-model="shows.newShow.category"></td>
+      <td><input type="text" ng-model="shows.newShow.year"></td>
+    </tr>
+    </tbody>
+  </table>
+
+
 </div>

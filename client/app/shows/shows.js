@@ -6,6 +6,7 @@ angular.module('maxxApp')
       .state('shows', {
         url: '/shows',
         templateUrl: 'app/shows/shows.html',
-        controller: 'ShowsCtrl'
+        controller: 'ShowsCtrl',
+        controllerAs: 'shows'
       });
   });
