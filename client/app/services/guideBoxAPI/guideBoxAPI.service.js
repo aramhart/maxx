@@ -3,6 +3,8 @@
 angular.module('maxxApp')
   .factory('guideBoxAPI', function ($http) {
      // Service logic
+    
+    // v2 api example https://api-public.guidebox.com/v2/movies?api_key=rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe
 
     var api = {};
     var baseUrl = "https://api-public.guidebox.com/v1.43/US/rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe/";
@@ -16,8 +18,9 @@ angular.module('maxxApp')
                 });
     }
 
-    api.getChannels = function () {
-            return $http.get(baseUrl + 'channels')
+    api.getChannels = function (channelType) {
+            channelTypeFormatted = '/' + channelType;
+            return $http.get(baseUrl + 'channels' + channelTypeFormatted + limit1 + limit2)
                 .then(
                 function (response) {
                     return response
