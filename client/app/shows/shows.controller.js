@@ -2,15 +2,19 @@
 
 angular.module('maxxApp')
   .controller('ShowsCtrl', function ($http, guideBoxAPI, socket, $scope) {
+   // $scope.message = 'Hello';
    this.$http = $http;
 
    var baseUrl = "https://api-public.guidebox.com/v1.43/US/rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe/";
-   var baseUrlv2 = "https://api-public.guidebox.com/v2/";
-   var v2GuideBoxAPIKey = "api_key=rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe";
-
-   this.guideBoxSearchInput = 'Taken';
+   this.guideBoxSearchInput = 'Bounty Hunters';
    this.newShow = {};
    console.log('show view');
+  // this.shows = '';
+
+//	$http.get('/api/shows').then(response => {
+  //    this.showData = response.data;
+    //  	console.log('this.shows',this.shows);
+    //});
 
 	$scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
@@ -48,7 +52,7 @@ this.deleteShow = function(show) {
   	console.log('delete show');
     this.$http.delete('/api/shows/' + show._id).then(response => {
 	 	console.log('deleted',show._id);
-	 	this.getLocalData(); //need to re-load local data
+	 	this.getLocalData(); //need to re-load local data!
 	 	// socket.syncUpdates('thing', this.awesomeThings);
 
     	//this.guideBoxShows = response.data.results; //results is array of shows only instead of object
@@ -68,24 +72,6 @@ this.transferToLocalAPI = function() {
     this.getLocalData();
 }
 
-//dumps entire guideBox DB into local API database for use locally
-this.dumpEntireGuideBoxDB = function() {
-	var guideBoxTotalResults = 71204;
-	var guideBoxMaxResults = 250;
-	var guideBoxRequiredCalls = (guideBoxTotalResults/guideBoxMaxResults)/25;
-	var guideBoxAPIDump = [];
-	console.log('Loading data!!..')
-
-	for(var i = 0; i < guideBoxRequiredCalls; i++) {
-		this.$http.get(baseUrlv2 + 'movies?' + v2GuideBoxAPIKey + '&limit=' + guideBoxMaxResults + '&offset=' + guideBoxMaxResults).then(response => {
-    	  guideBoxAPIDump = guideBoxAPIDump.concat(response.data.results); //results is array of shows only instead of object
-    	  console.log('hello',guideBoxAPIDump);
-    	  //this.transferToLocalAPI()
-        });    
-    console.log('Here is the file.',guideBoxAPIDump);
-
-	}
-}
 this.getLocalData();
 this.searchGuideBoxAPI(); //call initially 
 

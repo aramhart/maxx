@@ -17,18 +17,12 @@
       <th>id</th>
       <th>Title</th>
       <th>Year</th>
-      <th>IMDB id</th>
-      <th>Artwork html</th>
-
     </thead>
     <tbody>
       <tr ng-repeat="show in shows.showData">
         <td>{{show.title}}</td>
-        <td>{{show.id}}</td>
-        <td>{{show.first_aired}}</td>
-        <td>{{show.imdb_id}}</td>
-        <td>{{show.artwork_208x117}}</td>
-
+        <td>{{show.category}}</td>
+        <td>{{show.year}}</td>
         <td><button type="button" class="close" ng-click="shows.deleteShow(show)">&times;</button></td>
       </tr>
    <tr>
@@ -71,7 +65,6 @@
   </table>
 
   <button class="btn btn-primary" ng-click="shows.transferToLocalAPI()">Transfer to DB</button>
-  <button class="btn btn-primary" ng-click="shows.dumpEntireGuideBoxDB()">Dump guidebox to DB</button>
 
 
 </div>
