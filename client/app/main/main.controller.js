@@ -5,13 +5,13 @@
 class MainController {
 
 
-  constructor($http, $scope, socket, guideBoxAPI) {
+  constructor($http, $scope, socket, guideBoxAPI, guideBoxBaseUrlV2, v2GuideBoxApiKey) {
+    //use this to pass dependencies into functions defined later in controller
     this.$http = $http;
+    this.guideBoxBaseUrlV2 = guideBoxBaseUrlV2;
+    this.v2GuideBoxApiKey = v2GuideBoxApiKey;
     this.awesomeThings = [];
     $scope.searchBarInput = 'Alien';
-    var baseUrlv2 = "https://api-public.guidebox.com/v2/";
-    var v2GuideBoxAPIKey = "api_key=rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe";
-
     guideBoxAPI.getSearchResults() //get genres
                        .then(function (response) {
                             $scope.searchResults = response;                           
@@ -41,12 +41,10 @@ class MainController {
   }
 
   searchGuideBoxApi() {
-    var baseUrlv2 = "https://api-public.guidebox.com/v2/";
-    var v2GuideBoxAPIKey = "api_key=rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe";
     this.guideBoxSearchResults = [];
-    this.$http.get(baseUrlv2 + 'search?type=movie&field=title&query=' + this.guideBoxSearchTerm + '&' + v2GuideBoxAPIKey + '&limit=250').then(response => {
+    this.$http.get(this.guideBoxBaseUrlV2 + 'search?type=movie&field=title&query=' + this.guideBoxSearchTerm + '&' + this.v2GuideBoxApiKey + '&limit=250').then(response => {
          this.guideBoxSearchResults = response.data.results; //results is array of shows only instead of object
-         console.log(Search Results:,this.guideBoxSearchResults);
+         console.log('Search Results:'+this.guideBoxSearchResults);
          }); 
   }
 
