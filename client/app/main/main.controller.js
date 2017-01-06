@@ -4,10 +4,13 @@
 
 class MainController {
 
+
   constructor($http, $scope, socket, guideBoxAPI) {
     this.$http = $http;
     this.awesomeThings = [];
     $scope.searchBarInput = 'Alien';
+    var baseUrlv2 = "https://api-public.guidebox.com/v2/";
+    var v2GuideBoxAPIKey = "api_key=rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe";
 
     guideBoxAPI.getSearchResults() //get genres
                        .then(function (response) {
@@ -35,6 +38,16 @@ class MainController {
       this.$http.post('/api/things', { name: this.newThing });
       this.newThing = '';
     }
+  }
+
+  searchGuideBoxApi() {
+    var baseUrlv2 = "https://api-public.guidebox.com/v2/";
+    var v2GuideBoxAPIKey = "api_key=rKXF8DcgHFbOSRgJ3awk3LZlC3tBMXbe";
+    this.guideBoxSearchResults = [];
+    this.$http.get(baseUrlv2 + 'search?type=movie&field=title&query=' + this.guideBoxSearchTerm + '&' + v2GuideBoxAPIKey + '&limit=250').then(response => {
+         this.guideBoxSearchResults = response.data.results; //results is array of shows only instead of object
+         console.log(Search Results:,this.guideBoxSearchResults);
+         }); 
   }
 
   deleteThing(thing) {
