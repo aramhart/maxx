@@ -19,6 +19,29 @@
 </header>
 
 <div class="container">
+<h1>Shows in Guidebox DB</h1>
+  <table class="table">
+    <thead>
+      <th>Title</th>
+      <th>id</th>
+      <th>Year</th>
+      <th>IMDB id</th>
+      <th>Artwork html</th>
+
+    </thead>
+    <tbody> 
+      <tr ng-repeat="show in main.guideBoxSearchResults">
+        <td>{{show.title}}</td>
+        <td>{{show.id}}</td>
+        <td>{{show.release_year}}</td>
+        <td>{{show.rottentomatoes}}</td>
+        <td><img ng-src="{{show.poster_120x171}}" alt="{{show.title}} poster" /></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container">
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Features:</h1>
