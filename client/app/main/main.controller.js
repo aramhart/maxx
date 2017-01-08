@@ -12,7 +12,7 @@ class MainController {
     this.v2GuideBoxApiKey = v2GuideBoxApiKey;
     this.omdbBaseUrl = omdbBaseUrl;
     this.awesomeThings = [];
-    this.guideBoxSearchTerm = 'Alien';
+    this.guideBoxSearchTerm = 'Bounty Hunter';
     this.currentMovieImdbId = 'tt0078748'
     guideBoxAPI.getSearchResults() //get genres
                        .then(function (response) {
@@ -55,12 +55,42 @@ class MainController {
          }); 
   }
 
- getOmdbById() {
+ //get a single result by id, but uses data from view (this.currentMovieImdbId) can get rid of this pretty sure
+ //just pass in this.variable through view
+ getSingleOmdbById() {
    this.omdbSingleMovie = {};
     this.$http.get(this.omdbBaseUrl + '?i=' + this.currentMovieImdbId + '&y=&plot=short&r=json').then(response => {
          this.omdbSingleMovie = response; 
-         console.log('Single Movie',this.omdbSingleMovie);
+         console.log('!Single Movie',this.omdbSingleMovie);
          }); 
+  }
+
+  //get single result by id, passed into function and return json data
+  //return json data is object of movie info
+  getOmdbById(id) {
+   var movieData = [];
+    this.$http.get(this.omdbBaseUrl + '?i=' + id + '&y=&plot=short&r=json').then(response => {
+         console.log('response.data',response.data);
+         movieData = response.data;
+         }); 
+    console.log('movieData',movieData);
+    return movieData;
+  }
+
+  //create a matching dataset of guidebox search results but with OMDB data
+  createOmdbResults() {
+    this.omdbResults = []; //array of Omdb data matching guidebox data from search results
+    
+    for (var i=0; i<this.guideBoxSearchResults.length; i++) {
+      if (this.guideBoxSearchResults[i].imdb) { 
+        this.$http.get(this.omdbBaseUrl + '?i=' + this.guideBoxSearchResults[i].imdb + '&y=&plot=short&r=json').then(response => {
+        console.log(response,'omdb results',this.omdbResults);
+        this.omdbResults.push(response.data); 
+
+         });
+      }
+    }
+  
   }
 
   deleteThing(thing) {

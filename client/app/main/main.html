@@ -62,5 +62,8 @@
   </form>
 
           <button class="btn btn-primary" ng-click="main.getOmdbById()">Get Omdb info</button>
+          <button class="btn btn-primary" ng-click="main.createOmdbResults()">Create Omdb dataset</button>
+
           !{{main.omdbSingleMovie}}
+      <span ng-repeat="show in main.omdbResults">{{show.Title}}<p></span>
 </div>
