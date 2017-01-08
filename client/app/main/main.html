@@ -23,10 +23,10 @@
   <table class="table">
     <thead>
       <th>Title</th>
-      <th>id</th>
+      <th>Id</th>
       <th>Year</th>
-      <th>IMDB id</th>
-      <th>Artwork html</th>
+      <th>Rotten Tomatoes Id</th>
+      <th>Artwork</th>
 
     </thead>
     <tbody> 
@@ -60,4 +60,7 @@
       </span>
     </p>
   </form>
+
+          <button class="btn btn-primary" ng-click="main.getOmdbById()">Get Omdb info</button>
+          !{{main.omdbSingleMovie}}
 </div>

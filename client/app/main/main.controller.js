@@ -5,13 +5,15 @@
 class MainController {
 
 
-  constructor($http, $scope, socket, guideBoxAPI, guideBoxBaseUrlV2, v2GuideBoxApiKey) {
+  constructor($http, $scope, socket, guideBoxAPI, guideBoxBaseUrlV2, v2GuideBoxApiKey, omdbBaseUrl) {
     //use this to pass dependencies into functions defined later in controller
     this.$http = $http;
     this.guideBoxBaseUrlV2 = guideBoxBaseUrlV2;
     this.v2GuideBoxApiKey = v2GuideBoxApiKey;
+    this.omdbBaseUrl = omdbBaseUrl;
     this.awesomeThings = [];
     this.guideBoxSearchTerm = 'Alien';
+    this.currentMovieImdbId = 'tt0078748'
     guideBoxAPI.getSearchResults() //get genres
                        .then(function (response) {
                             $scope.searchResults = response;                           
@@ -34,7 +36,7 @@ class MainController {
 
     this.$http.get(this.guideBoxBaseUrlV2 + 'search?type=movie&field=title&query=' + this.guideBoxSearchTerm + '&' + this.v2GuideBoxApiKey + '&limit=250').then(response => {
          this.guideBoxSearchResults = response.data.results; //results is array of shows only instead of object
-         console.log('Search Results:'+response.data);
+         console.log('Search Response',response.data);
          });
   }
 
@@ -50,6 +52,14 @@ class MainController {
     this.$http.get(this.guideBoxBaseUrlV2 + 'search?type=movie&field=title&query=' + this.guideBoxSearchTerm + '&' + this.v2GuideBoxApiKey + '&limit=250').then(response => {
          this.guideBoxSearchResults = response.data.results; //results is array of shows only instead of object
          console.log('Search Results:'+response.data);
+         }); 
+  }
+
+ getOmdbById() {
+   this.omdbSingleMovie = {};
+    this.$http.get(this.omdbBaseUrl + '?i=' + this.currentMovieImdbId + '&y=&plot=short&r=json').then(response => {
+         this.omdbSingleMovie = response; 
+         console.log('Single Movie',this.omdbSingleMovie);
          }); 
   }
 
